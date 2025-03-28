@@ -12,21 +12,21 @@
 </head>
 <body>
   <h1>Interactúa con tu Agente Inteligente</h1>
-  
-  <!-- Interfaz de entrada manual -->
+
+  <!-- Campo de entrada manual -->
   <input id="user-input" type="text" placeholder="Escribe tu mensaje..." style="width: 70%; padding: 8px;">
   <button onclick="sendMessage()">Enviar</button>
   <div id="response">Respuesta del agente aparecerá aquí...</div>
 
   <!-- Contenedor para la ventana del chat n8n -->
   <div id="n8n-chat" style="margin-top: 40px;"></div>
-  
+
   <script type="module">
+    // Importación y configuración del chat dinámico de n8n
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // Configuración del chat de n8n
     createChat({
-      webhookUrl: 'https://vicentepergal.app.n8n.cloud/webhook/0a9ff386-ae0f-4939-8747-1db84b61e835/chat', // URL del Webhook
+      webhookUrl: 'https://vicentepergal.app.n8n.cloud/webhook/0a9ff386-ae0f-4939-8747-1db84b61e835/chat', // Reemplaza con tu Webhook de producción
       webhookConfig: {
         method: 'POST',
         headers: {}
@@ -36,8 +36,8 @@
       chatInputKey: 'chatInput',
       chatSessionKey: 'sessionId',
       metadata: {},
-      showWelcomeScreen: true, // Cambiar según preferencia
-      defaultLanguage: 'es', // Configurar en español
+      showWelcomeScreen: false,
+      defaultLanguage: 'es',
       initialMessages: [
         '¡Hola! 👋',
         'Soy Nathan, ¿cómo puedo ayudarte hoy?'
@@ -58,7 +58,7 @@
       const userInput = document.getElementById('user-input').value;
       const webhookUrl = 'https://vicentepergal.app.n8n.cloud/webhook/0a9ff386-ae0f-4939-8747-1db84b61e835/chat'; // Reemplaza con el Webhook de n8n
       const responseDiv = document.getElementById('response');
-      
+
       try {
         const response = await fetch(webhookUrl, {
           method: 'POST',
