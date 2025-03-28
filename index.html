@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agente Inteligente</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #response { margin-top: 20px; color: blue; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Interactúa con tu Agente Inteligente</h1>
+  <input id="user-input" type="text" placeholder="Escribe tu mensaje..." style="width: 70%; padding: 8px;">
+  <button onclick="sendMessage()">Enviar</button>
+  <div id="response">Respuesta del agente aparecerá aquí...</div>
+
+  <script>
+    async function sendMessage() {
+      const userInput = document.getElementById('user-input').value;
+      const webhookUrl = 'TU_WEBHOOK_URL_N8N'; // Reemplaza con el Webhook de n8n
+      const responseDiv = document.getElementById('response');
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userInput })
+        });
+        const data = await response.json();
+        responseDiv.textContent = `Agente: ${data.reply || 'Sin respuesta'}`;
+      } catch (error) {
+        console.error('Error:', error);
+        responseDiv.textContent = 'Error al comunicarse con el agente.';
+      }
+    }
+  </script>
+</body>
+</html>
