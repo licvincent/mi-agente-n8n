@@ -3,75 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agente Inteligente</title>
+  <title>Hipertensión en México</title>
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #response { margin-top: 20px; color: blue; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    p {
+      text-align: justify;
+      color: #555;
+      line-height: 1.6;
+    }
+    .image-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    #n8n-chat {
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
-  <h1>Interactúa con tu Agente Inteligente</h1>
+  <h1>Hipertensión en México</h1>
+  <p>
+    La hipertensión arterial es una enfermedad crónica que afecta a más de 30 millones de personas en México, lo que representa aproximadamente una de cada cuatro personas. Es una de las principales causas de enfermedades cardiovasculares, insuficiencia renal y accidentes cerebrovasculares. 
+  </p>
+  <p>
+    Factores como el sedentarismo, la obesidad, el consumo excesivo de sal y alcohol, y el estrés contribuyen al desarrollo de esta condición. Sin embargo, con un diagnóstico temprano y cambios en el estilo de vida, es posible prevenir complicaciones graves y mejorar la calidad de vida.
+  </p>
+  
+  <div class="image-container">
+    <img src="https://via.placeholder.com/800x400" alt="Hipertensión en México">
+    <p>La hipertensión afecta a millones de mexicanos y requiere atención médica y prevención.</p>
+  </div>
 
-  <!-- Campo de entrada manual -->
-  <input id="user-input" type="text" placeholder="Escribe tu mensaje..." style="width: 70%; padding: 8px;">
-  <button onclick="sendMessage()">Enviar</button>
-  <div id="response">Respuesta del agente aparecerá aquí...</div>
+  <p>
+    Es importante medir la presión arterial regularmente, mantener una dieta saludable y realizar actividad física para reducir el riesgo. La educación y la concienciación son clave para combatir esta enfermedad en México.
+  </p>
 
-  <!-- Contenedor para la ventana del chat n8n -->
-  <div id="n8n-chat" style="margin-top: 40px;"></div>
+  <!-- Contenedor para el chat embebido de n8n -->
+  <div id="n8n-chat"></div>
 
   <script type="module">
-    // Importación y configuración del chat dinámico de n8n
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
     createChat({
-      webhookUrl: 'https://vicentepergal.app.n8n.cloud/webhook/0a9ff386-ae0f-4939-8747-1db84b61e835/chat', // Reemplaza con tu Webhook de producción
+      webhookUrl: 'https://vicentepergal.app.n8n.cloud/webhook/0a9ff386-ae0f-4939-8747-1db84b61e835/chat',
       webhookConfig: {
         method: 'POST',
         headers: {}
       },
       target: '#n8n-chat',
-      mode: 'window', // Opciones: 'window' o 'embed'
+      mode: 'window',
       chatInputKey: 'chatInput',
       chatSessionKey: 'sessionId',
       metadata: {},
-      showWelcomeScreen: false,
+      showWelcomeScreen: true,
       defaultLanguage: 'es',
       initialMessages: [
         '¡Hola! 👋',
-        'Soy Nathan, ¿cómo puedo ayudarte hoy?'
+        'Soy Goku, ¿cómo puedo ayudarte hoy?'
       ],
       i18n: {
         es: {
           title: '¡Hola! 👋',
-          subtitle: "Inicia una conversación. Estamos aquí para ayudarte.",
+          subtitle: "Inicia una conversación sobre la Hipertension en mexico. Estamos aquí para ayudarte.",
           footer: '',
           getStarted: 'Nueva conversación',
           inputPlaceholder: 'Escribe tu pregunta...',
         },
       },
     });
-
-    // Función para enviar datos al Webhook manualmente
-    async function sendMessage() {
-      const userInput = document.getElementById('user-input').value;
-      const webhookUrl = 'https://vicentepergal.app.n8n.cloud/webhook/0a9ff386-ae0f-4939-8747-1db84b61e835/chat'; // Reemplaza con el Webhook de n8n
-      const responseDiv = document.getElementById('response');
-
-      try {
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: userInput })
-        });
-        const data = await response.json();
-        responseDiv.textContent = `Agente: ${data.reply || 'Sin respuesta'}`;
-      } catch (error) {
-        console.error('Error:', error);
-        responseDiv.textContent = 'Error al comunicarse con el agente.';
-      }
-    }
   </script>
 </body>
 </html>
